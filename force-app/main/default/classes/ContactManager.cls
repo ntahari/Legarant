@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/Contact/*')
 global with sharing class ContactManager {
     @HttpPost
-    global static String upsertContact(String FirstName, String LastName, String Email) {
+    global static String createContact(String FirstName, String LastName, String Email) {
         List<Contact> existCont = [SELECT Id FROM Contact WHERE Email = :Email];
         if (existCont.size() > 0) {
             return 'This contact already exists: ' +existCont[0].Id;
@@ -12,7 +12,7 @@ global with sharing class ContactManager {
             Email = Email);
         // Match Contact by Id, if present.
         // Otherwise, create new Contact.
-        upsert thisContact;
+        insert thisContact;
         // Return the Contact ID.
         return 'Your new contact ID is: ' +thisContact.Id;
     }

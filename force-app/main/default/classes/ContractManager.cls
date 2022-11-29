@@ -23,6 +23,7 @@ global with sharing class ContractManager {
             // Set the field and value on the Contract sObject
             thisContract.put(fieldName, params.get(fieldName));
         }
+        System.debug('result: '+ thisContract);
         update thisContract;
         return thisContract.Id;
     }   

@@ -10,6 +10,8 @@ global with sharing class ContactManager {
             FirstName = FirstName,
             LastName  = LastName,
             Email = Email);
+        // Match Contact by Id, if present.
+        // Otherwise, create new Contact.
         insert thisContact;
         // Return the Contact ID.
         return 'Your new contact ID is: ' +thisContact.Id;

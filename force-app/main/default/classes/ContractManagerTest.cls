@@ -20,8 +20,12 @@ private class ContractManagerTest {
         request.addHeader('Content-Type', 'application/json');
         request.requestBody = Blob.valueOf('{"Status": "Activated"}');
         RestContext.request = request;
+
         // Update ContractTerm of existing record
+        Test.startTest();
         ID thisContractId = ContractManager.updateContractFields();
+        Test.stopTest();
+
         // Verify record was updated
         System.assert(thisContractId != null);
         Contract thisContract = [SELECT Id,Status FROM Contract WHERE Id=:thisContractId];
@@ -36,7 +40,9 @@ private class ContractManagerTest {
             Status = 'Draft',
             StartDate = System.today(),
             ContractTerm = 3);
+        Test.startTest();
         insert contractTest;
+        Test.stopTest();
         return contractTest.Id;
     }          
 }

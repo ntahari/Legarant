@@ -9,7 +9,7 @@ private class ContactManagerTest {
         System.assert(thisContact.Id != null);
         System.assertEquals(thisContact.FirstName, 'Test FirstName');
     }
-    @isTest static void testDeleteContact() {
+    @isTest static void testDeactiveContact() {
         Id recordId = createTestRecord();
         // Set up a test request
         RestRequest request = new RestRequest();
@@ -19,7 +19,10 @@ private class ContactManagerTest {
         request.httpMethod = 'DELETE';
         RestContext.request = request;
         // Call the method to test
+        Test.startTest();
         ContactManager.deactiveContact();
+        Test.stopTest();
+
         // Verify record is deleted
         Contact contactTest = [SELECT Id, IsActive__c FROM Contact WHERE Id=:recordId];
         System.assert(contactTest.IsActive__c == false);
@@ -36,7 +39,10 @@ private class ContactManagerTest {
         request.requestBody = Blob.valueOf('{"FirstName": "test UpdateName"}');
         RestContext.request = request;
         // Update FirstName of existing record to test UpdateName
+        Test.startTest();
         ID thisContactId = ContactManager.updateContactFields();
+        Test.stopTest();
+
         // Verify record was updated
         System.assert(thisContactId != null);
         Contact thisContact = [SELECT Id,FirstName FROM Contact WHERE Id=:thisContactId];
@@ -50,7 +56,9 @@ private class ContactManagerTest {
             LastName='Test record',
             FirstName='Test firstName',
             Email='Test@test.com');
+        Test.startTest();
         insert contactTest;
+        Test.stopTest();
         return contactTest.Id;
     }          
 }
